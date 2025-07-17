@@ -1,7 +1,8 @@
 # Coding Challenge: Interactive Document Classifier Dashboard
 
 The design was made from the example UI.
-
+Time spent:4-4.5h
+Some possible additions: normalize the scores to equal 1, add undo functionality, implement pagination on the GET endpoint.
 ## Tech Stack
 
 ### React + Typescript for UI
@@ -43,3 +44,5 @@ npm run start
 ```
 #### Backend is running at: http://localhost:8080
 #### Frontend is running at: http://localhost:3000
+
+
