@@ -2,7 +2,8 @@
 
 The design was made from the example UI.
 Time spent:4-4.5h
-Some possible additions: normalize the scores to equal 1, add undo functionality, implement pagination on the GET endpoint.
+
+Possible additions: normalize the scores to equal 1, add undo functionality, implement pagination on the GET endpoint, store edited badge in backend rather than in local state
 ## Tech Stack
 
 ### React + Typescript for UI
