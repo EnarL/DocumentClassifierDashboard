@@ -18,35 +18,46 @@ const FilterControls: React.FC<FilterControlsProps> = ({
                                                            setFilterMaxScore,
                                                        }) => {
     return (
-        <div style={{ marginBottom: 20 }}>
-            <input
-                placeholder="Filter by classification label"
-                value={filterLabel}
-                onChange={(e) => setFilterLabel(e.target.value)}
-                style={{ marginRight: 10 }}
-            />
-            <input
-                type="number"
-                min={0}
-                max={1}
-                step={0.01}
-                value={filterMinScore}
-                onChange={(e) => setFilterMinScore(Number(e.target.value))}
-                placeholder="Min confidence"
-                style={{ width: 120, marginRight: 10 }}
-            />
-            <input
-                type="number"
-                min={0}
-                max={1}
-                step={0.01}
-                value={filterMaxScore}
-                onChange={(e) => setFilterMaxScore(Number(e.target.value))}
-                placeholder="Max confidence"
-                style={{ width: 120 }}
-            />
+        <div className="filterControls">
+            <div>
+                <label>
+                    Filter Label:
+                    <input
+                        type="text"
+                        value={filterLabel}
+                        onChange={(e) => setFilterLabel(e.target.value)}
+                    />
+                </label>
+            </div>
+            <div>
+                <label>
+                    Min Probability:
+                    <input
+                        type="number"
+                        step="0.01"
+                        min={0}
+                        max={1}
+                        value={filterMinScore}
+                        onChange={(e) => setFilterMinScore(Number(e.target.value))}
+                    />
+                </label>
+            </div>
+            <div>
+                <label>
+                    Max Probability:
+                    <input
+                        type="number"
+                        step="0.01"
+                        min={0}
+                        max={1}
+                        value={filterMaxScore}
+                        onChange={(e) => setFilterMaxScore(Number(e.target.value))}
+                    />
+                </label>
+            </div>
         </div>
     );
 };
+
 
 export default FilterControls;

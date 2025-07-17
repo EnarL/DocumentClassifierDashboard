@@ -1,5 +1,5 @@
 import React from "react";
-import { DocumentType } from "../App";
+import { DocumentType } from "../types/types";
 
 interface ClassificationEditorProps {
     doc: DocumentType;
@@ -9,7 +9,6 @@ interface ClassificationEditorProps {
     setEditScore: React.Dispatch<React.SetStateAction<string>>;
     commitChanges: () => void;
     cancelEditing: () => void;
-    lowConfidence: boolean;
 }
 
 const ClassificationEditor: React.FC<ClassificationEditorProps> = ({
@@ -20,8 +19,10 @@ const ClassificationEditor: React.FC<ClassificationEditorProps> = ({
                                                                        setEditScore,
                                                                        commitChanges,
                                                                        cancelEditing,
-                                                                       lowConfidence,
                                                                    }) => {
+    const currentScore = parseFloat(editScore);
+    const lowConfidence = !isNaN(currentScore) && currentScore < 0.7;
+
     return (
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
             <select
@@ -29,7 +30,7 @@ const ClassificationEditor: React.FC<ClassificationEditorProps> = ({
                 onChange={(e) => setSelectedLabel(e.target.value)}
                 style={{
                     fontWeight: "600",
-                    color: lowConfidence ? "#d9534f" : "#333",
+                    color: "#333",
                     fontSize: "1rem",
                     padding: "4px 8px",
                     borderRadius: 4,
@@ -38,11 +39,16 @@ const ClassificationEditor: React.FC<ClassificationEditorProps> = ({
                 }}
                 autoFocus
             >
-                {doc.classifications.map((c) => (
-                    <option key={c.label} value={c.label}>
-                        {c.label}
-                    </option>
-                ))}
+                {doc.classifications.map((c) => {
+                    const isLowConfidence = c.score < 0.7;
+                    return (
+                        <option key={c.label} value={c.label} style={{
+                            color: isLowConfidence ? "#d9534f" : "#333"
+                        }}>
+                            {c.label}
+                        </option>
+                    );
+                })}
             </select>
 
             <input

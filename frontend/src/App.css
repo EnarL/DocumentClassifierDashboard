@@ -1,0 +1,154 @@
+.container {
+    padding: 20px;
+}
+
+/* Sorting controls */
+.sortControls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    user-select: none;
+    padding: 12px 16px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    border: 1px solid #e9ecef;
+    color: #495057;
+    font-weight: 500;
+}
+
+.sortArrow {
+    cursor: pointer;
+    font-weight: bold;
+    user-select: none;
+    font-size: 1.2em;
+    color: #888;
+}
+
+.sortArrow.active {
+    color: #6f42c1;
+}
+/* Filtering controls */
+.filterControls {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 20px;
+    padding: 12px 16px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    border: 1px solid #e9ecef;
+    flex-wrap: wrap;
+}
+
+.filterControls > div {
+    flex: 1 1 150px;
+    min-width: 150px;
+}
+
+.filterControls label {
+    display: flex;
+    flex-direction: column;
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: #333;
+}
+
+.filterControls input[type="text"],
+.filterControls input[type="number"] {
+    margin-top: 6px;
+    padding: 6px 8px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+@media (max-width: 600px) {
+    .filterControls > div {
+        margin-bottom: 8px;
+    }
+
+    .filterControls label {
+        margin: 0;
+    }
+
+    .filterControls input {
+        margin-top: 4px;
+    }
+
+
+
+
+}
+
+/* Document List */
+
+.document-card {
+    border-bottom: 1px solid #ddd;
+    padding: 12px 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.document-title {
+    margin: 0;
+}
+
+.classification-label {
+    font-weight: 600;
+    color: #333;
+    cursor: pointer;
+    user-select: none;
+}
+
+.classification-label.low-confidence {
+    color: #d9534f;
+}
+
+.edited-flag {
+    color: #0275d8;
+    font-size: 0.85rem;
+    margin-left: 8px;
+}
+
+
+/* Document Card */
+.document-card {
+    border-bottom: 1px solid #ddd;
+    padding: 12px 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.document-title {
+    margin: 0;
+}
+
+.no-classifications {
+    padding: 12px 0;
+    width: 100%;
+}
+
+.classification-label {
+    font-weight: 600;
+    color: #333;
+    cursor: pointer;
+    user-select: none;
+}
+
+.classification-label.low-confidence {
+    color: #d9534f;
+}
+
+.edited-flag {
+    color: #0275d8;
+    font-size: 0.85rem;
+    margin-left: 8px;
+}

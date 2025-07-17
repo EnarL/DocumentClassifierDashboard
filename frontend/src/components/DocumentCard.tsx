@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
-import { DocumentType } from "../App";
+import { DocumentType } from "../types/types";
 import ClassificationEditor from "./ClassificationEditor";
+import "../app.css";
 
 interface DocumentCardProps {
     doc: DocumentType;
@@ -12,6 +13,7 @@ interface DocumentCardProps {
     setEditScore: React.Dispatch<React.SetStateAction<string>>;
     setDocuments: React.Dispatch<React.SetStateAction<DocumentType[]>>;
     updateClassification: (docId: number, classifications: DocumentType["classifications"]) => void;
+    sortByConfidence: "asc" | "desc" | null;
 }
 
 const DocumentCard: React.FC<DocumentCardProps> = ({
@@ -24,32 +26,38 @@ const DocumentCard: React.FC<DocumentCardProps> = ({
                                                        setEditScore,
                                                        setDocuments,
                                                        updateClassification,
+                                                       sortByConfidence,
                                                    }) => {
-    const top = doc.classifications.reduce((max, c) => (c.score > max.score ? c : max));
-    const lowConfidence = top.score < 0.7;
+    const getDisplayClassification = () => {
+        if (!doc.classifications.length) return null;
+
+        if (sortByConfidence === "asc") {
+            return doc.classifications.reduce((min, c) => (c.score < min.score ? c : min));
+        }
+        return doc.classifications.reduce((max, c) => (c.score > max.score ? c : max));
+    };
+
+    const top = getDisplayClassification();
+    const displayedClassificationLowConfidence = top ? top.score < 0.7 : false;
     const isEditing = editingDoc === doc.id;
 
-    function startEditing() {
+    const startEditing = () => {
+        if (!top) return;
         setEditingDoc(doc.id);
         setSelectedLabel(top.label);
         setEditScore(top.score.toString());
-    }
+    };
 
-    function cancelEditing() {
+    const cancelEditing = () => {
         setEditingDoc(null);
         setSelectedLabel(null);
         setEditScore("");
-    }
+    };
 
-    function commitChanges() {
+    const commitChanges = () => {
         if (!selectedLabel) return;
 
         const newScore = parseFloat(editScore);
-        if (isNaN(newScore) || newScore < 0 || newScore > 1) {
-            alert("Confidence score must be a number between 0 and 1.");
-            return;
-        }
-
         const updatedClassifications = doc.classifications.map((c) =>
             c.label === selectedLabel
                 ? { label: selectedLabel, score: newScore, manuallyEdited: true }
@@ -61,11 +69,9 @@ const DocumentCard: React.FC<DocumentCardProps> = ({
         );
 
         updateClassification(doc.id, updatedClassifications);
-
         cancelEditing();
-    }
+    };
 
-    // Sync score when selectedLabel changes while editing
     useEffect(() => {
         if (!isEditing || !selectedLabel) return;
 
@@ -73,19 +79,18 @@ const DocumentCard: React.FC<DocumentCardProps> = ({
         if (classification) setEditScore(classification.score.toString());
     }, [selectedLabel, isEditing, doc.classifications, setEditScore]);
 
+    if (!top) {
+        return (
+            <div className="no-classifications">
+                <h3 className="document-title">{doc.title}</h3>
+                <p>No classifications available.</p>
+            </div>
+        );
+    }
+
     return (
-        <div
-            key={doc.id}
-            style={{
-                borderBottom: "1px solid #ddd",
-                padding: "12px 0",
-                width: "100%",
-                display: "flex",
-                flexDirection: "column",
-                gap: 8,
-            }}
-        >
-            <h3 style={{ margin: 0 }}>{doc.title}</h3>
+        <div className="document-card" key={doc.id}>
+            <h3 className="document-title">{doc.title}</h3>
 
             {isEditing ? (
                 <ClassificationEditor
@@ -96,25 +101,15 @@ const DocumentCard: React.FC<DocumentCardProps> = ({
                     setEditScore={setEditScore}
                     commitChanges={commitChanges}
                     cancelEditing={cancelEditing}
-                    lowConfidence={lowConfidence}
                 />
             ) : (
                 <label
                     onClick={startEditing}
-                    style={{
-                        fontWeight: "600",
-                        color: lowConfidence ? "#d9534f" : "#333",
-                        cursor: "pointer",
-                        userSelect: "none",
-                    }}
+                    className={`classification-label${displayedClassificationLowConfidence ? " low-confidence" : ""}`}
                     title="Click to edit"
                 >
                     {top.label} {(top.score * 100).toFixed(0)}%
-                    {top.manuallyEdited && (
-                        <em style={{ color: "#0275d8", fontSize: "0.85rem", marginLeft: 8 }}>
-                            Edited
-                        </em>
-                    )}
+                    {top.manuallyEdited && <em className="edited-flag">Edited</em>}
                 </label>
             )}
         </div>
