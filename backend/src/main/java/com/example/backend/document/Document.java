@@ -15,6 +15,8 @@ public class Document {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)  
     private String title;
 
     @ToString.Exclude
@@ -22,3 +24,4 @@ public class Document {
     @OneToMany(mappedBy = "document", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Classification> classifications = new ArrayList<>();
 }
+

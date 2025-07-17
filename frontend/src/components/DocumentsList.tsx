@@ -1,7 +1,7 @@
 import React from "react";
 import { DocumentType } from "../types/types";
 import DocumentCard from "./DocumentCard";
-import "../app.css";
+import "../App.css";
 
 interface DocumentsListProps {
     documents: DocumentType[];

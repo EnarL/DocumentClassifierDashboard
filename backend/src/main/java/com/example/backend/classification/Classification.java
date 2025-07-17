@@ -13,12 +13,15 @@ public class Classification {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String label;
+
+    @Column(nullable = false)
     private double score;
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @ManyToOne
-    @JoinColumn(name = "document_id")
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "document_id", nullable = false)
     private Document document;
 }

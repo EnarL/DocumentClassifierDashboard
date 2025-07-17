@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { DocumentType } from "../types/types";
 import ClassificationEditor from "./ClassificationEditor";
-import "../app.css";
+import "../App.css";
 
 interface DocumentCardProps {
     doc: DocumentType;
