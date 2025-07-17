@@ -37,7 +37,7 @@ Run BackendApplication
 ```bash
 
 # 3. Create database
-Run PgAdmin and create database called "Documents" or use psql and insert CREATE DATABASE documents
+Run PgAdmin and create database called "documents" or use psql and insert CREATE DATABASE documents
 ```
 ```bash
 # 4. Move to frontend  directory
